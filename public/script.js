@@ -3,6 +3,10 @@ const winningText = document.querySelector('[data-winning-message-text]');
 const boardElement = document.getElementById('board');
 const restartButton = document.getElementById('restartButton');
 const winningMessage = document.getElementById('winningMessage');
+const player1 = document.getElementById('player1');
+const player2 = document.getElementById('player2');
+const scoreReuslt1 = document.getElementById('score1');
+const scoreReuslt2 = document.getElementById('score2');
 
 const WINNING_COMBINATIONS = [
     [0, 1, 2],
@@ -17,6 +21,10 @@ const WINNING_COMBINATIONS = [
 let circleTurn;
 const CIRCLE_CLASS = 'circle';
 const X_CLASS = 'x';
+const TURN_CLASS = 'turn';
+
+
+
 
 
 startGame();
@@ -24,6 +32,9 @@ restartButton.addEventListener('click', startGame)
 
 function startGame() {
     circleTurn = false;
+
+    player1.classList.add(TURN_CLASS)
+    player2.classList.remove(TURN_CLASS);
     cellElements.forEach(cell => {
         cell.classList.remove(CIRCLE_CLASS),
             cell.classList.remove(X_CLASS),
@@ -37,6 +48,14 @@ function startGame() {
 function handleClick(e) {
     const cell = e.target;
     const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS;
+
+    if (currentClass === X_CLASS) {
+        player1.classList.remove(TURN_CLASS);
+        player2.classList.add(TURN_CLASS);
+    } else {
+        player2.classList.remove(TURN_CLASS);
+        player1.classList.add(TURN_CLASS);
+    }
 
     placeMark(cell, currentClass);
     if (checkWin(currentClass)) {
@@ -53,12 +72,19 @@ function handleClick(e) {
 
 
 
-
 function endGame(draw) {
     if (draw) {
-        winningText.innerText = 'Nobody Win! Play Again?'
+        winningText.innerText = 'Nobody Wins! Play Again?'
     } else {
         winningText.innerText = `${circleTurn ? "0"  : "X" } Wins!!!`
+        if (circleTurn) {
+            scoreReuslt2.innerText = parseInt(scoreReuslt2.textContent) + 1
+        }
+        if (!circleTurn) {
+            scoreReuslt1.innerText = parseInt(scoreReuslt1.textContent) + 1
+        }
+
+
     }
 
     winningMessage.classList.add('show');

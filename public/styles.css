@@ -13,6 +13,27 @@ body {
     margin: 0;
 }
 
+.score {
+    text-align: center;
+    height: 15vh;
+}
+
+.players {
+    display: inline-block;
+    padding: 1rem;
+    color: lightgray;
+}
+
+.scoreRes {
+    display: inline-block;
+    font-size: 2rem;
+    padding: 1rem;
+}
+
+.players.turn {
+    color: green
+}
+
 .board {
     width: 100vw;
     height: 100vh;
